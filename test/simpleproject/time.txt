@@ -1,0 +1,10 @@
+Starting initialize AST
+Time: 0min0sec
+End of initialize AST
+-----------------------------------------------------------
+Starting danglingPointer check
+Time: 0min0sec
+End of danglingPointer check
+-----------------------------------------------------------
+-----------------------------------------------------------
+Total time: 0min0sec
