@@ -62,12 +62,17 @@ pointer is dereferenced. When the vulnerable pointer is deallocated, DANGDONE nu
 <h3>
 <a id="Prototype" class="anchor" href="#Prototype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prototype</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
+<p>We implemented a prototype based on the LLVM Compiler project. The static analysis tool is built as a Clang Tool and the 
+transformation phase is implemented as a LLVM pass. Our prototype generates warnings by analyzing ASTs of program, then transform 
+LLVM IR code according to the warnings. LLVM IR uses the Static Single Assignment (SSA). So there is no value that is reassigned 
+and each value has only a single assignment that defines it. LLVM provides interfaces so that each use of a value can be easily 
+traced back to its definition. With this feature provided by LLVM we can easily find all uses of a variable. With the support of 
+LLVM front-end we can easily build target applications with one extra complication option. Due to our mitigation transform program 
+in LLVM IR instead of source codes and LLVM IR provides high compatibility for different languages and different platforms.</p>
 <h3>
 <a id="Experiment" class="anchor" href="#Experiment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experiment</h3>
 
-<p>You can @mention a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p style="text-align:center;"><img src="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/experiment.png" alt="" width="600" ></p>
 
 <h3>
 <a id="Tutorial" class="anchor" href="#Tutorial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial</h3>
