@@ -52,11 +52,12 @@ negligible performance overhead (<1% with the proposed static analysis).</p>
 <h3>
 <a id="Overview" class="anchor" href="#Overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>The input of DANGDONE is the source code of the original program, and the output is the protected binary program.
-~DANGDONE consists of two steps: {\it static analysis} and {\it program transformation}. 
-The first step performs a lightweight and conservative static analysis~at the source code level to determine the 
-potentially vulnerable pointers (see Section~\ref{sec:SSA}). This step reduces the number of pointers that need to be considered in the second step. 
-Therefore,~this step is actually optional since we can consider all the pointers in the second step at the cost of efficiency.</p>
+<p>The basic idea of DANGDONE is as follows: first inserts an new pointer pointing to the pointer which is marked as vulnerable
+by static analysis, and then the new pointer is used to keep the pointer propagation consistent with the vulnerable pointer. 
+Note that aliases of the vulnerable pointer are also vulnerable, so they are all have the corresponding new pointers, which make 
+it possible to keep the pointer propagation consistent with the vulnerable pointer. The instrumentation will make all aliases of 
+the new pointer point to one vulnerable pointer. Then we replace uses of the vulnerable pointer with the new pointer if the vulnerable
+pointer is dereferenced. When the vulnerable pointer is deallocated, DANGDONE nullifies the freed pointers automatically.</p>
 <p style="text-align:center;"><img src="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/overview.png" alt="Overview of DANGDONE" width="600" ></p>
 <h3>
 <a id="Prototype" class="anchor" href="#Prototype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prototype</h3>
