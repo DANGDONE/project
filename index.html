@@ -35,27 +35,28 @@
 <a id="Introduction" class="anchor" href="#Introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
 <p>Dangling pointers have become an important class of software bugs that could result in use-after-free and double-free vulnerabilities. 
-%security exploits have demonstrated the widespread of these vulnerabilities.
 The effects of their exploitation can lead to information leakage, privilege elevation or even control-flow hijacking.
 So far, only few approaches are proposed to protect against dangling pointers and most of them incur high overhead.
-%Dangling pointer still remains one of the most critical and popular problem.
-In this paper we present a lightweight approach, named \tool, to eliminating dangling pointers during the compilation time.
+In this paper we present a lightweight approach, named DANGDONE, to eliminate dangling pointers during the compilation time.
 Because the root cause of a dangling pointer is that the pointer and its aliases are not nullified after the objects they point-to are
 deallocated,
-\tool achieves the protection via three steps:
+DANGDONE achieves the protection via three steps:
 (1) inserting new pointers point to vulnerable pointers, (2) using new pointers to keep track of aliases vulnerable pointers, and (3) 
 automatically nullifying pointers (a.k.a. intermediate pointers) whose memory contents are explicitly deallocated.
-\tool is implemented as the compile-time instrumentation and transformation which require no intervention from programmers. 
-%Importing of the intermediate pointer will force all of its aliases point to the intermediate pointer. 
+DANGDONE is implemented as the compile-time instrumentation and transformation which require no intervention from programmers. 
 Then the Nullification of the explicit freed pointer will eliminate all dangling pointers that are aliases of the freed pointer.
 We also design a conservative static analysis method to reduce the unnecessary transformation. 
-Experimental results show that \tool can protect the target software (the SPEC CPU benchmarks and programs with known CVE) with
-negligible performance overhead ($< 1$\% with the proposed static analysis).</p>
+Experimental results show that DANGDONE can protect the target software (the SPEC CPU benchmarks and programs with known CVE) with
+negligible performance overhead (<1% with the proposed static analysis).</p>
 
 <h3>
 <a id="Overview" class="anchor" href="#Overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
+<p>The input of DANGDONE is the source code of the original program, and the output is the protected binary program.
+~DANGDONE consists of two steps: {\it static analysis} and {\it program transformation}. 
+The first step performs a lightweight and conservative static analysis~at the source code level to determine the 
+potentially vulnerable pointers (see Section~\ref{sec:SSA}). This step reduces the number of pointers that need to be considered in the second step. 
+Therefore,~this step is actually optional since we can consider all the pointers in the second step at the cost of efficiency.</p>
 <p style="text-align:center;"><img src="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/overview.png" alt="Overview of DANGDONE" width="600" ></p>
 <h3>
 <a id="Prototype" class="anchor" href="#Prototype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prototype</h3>
