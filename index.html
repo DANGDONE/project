@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/DANGDONE/project">View on GitHub</a>
 
-          <h1 id="project_title">Project</h1>
+          <h1 id="project_title">DANGDONE</h1>
           <h2 id="project_tagline"></h2>
 
             <section id="downloads">
@@ -34,7 +34,23 @@
         <h3>
 <a id="Introduction" class="anchor" href="#Introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here <a href="https://guides.github.com/features/mastering-markdown/">using GitHub Flavored Markdown</a>, select a template crafted by a designer, and publish. After your page is generated, you can check out the new <code>gh-pages</code> branch locally. If you’re using GitHub Desktop, simply sync your repository and you’ll see the new branch.</p>
+<p>Dangling pointers have become an important class of software bugs that could result in use-after-free and double-free vulnerabilities. 
+%security exploits have demonstrated the widespread of these vulnerabilities.
+The effects of their exploitation can lead to information leakage, privilege elevation or even control-flow hijacking.
+So far, only few approaches are proposed to protect against dangling pointers and most of them incur high overhead.
+%Dangling pointer still remains one of the most critical and popular problem.
+In this paper we present a lightweight approach, named \tool, to eliminating dangling pointers during the compilation time.
+Because the root cause of a dangling pointer is that the pointer and its aliases are not nullified after the objects they point-to are
+deallocated,
+\tool achieves the protection via three steps:
+(1) inserting new pointers point to vulnerable pointers, (2) using new pointers to keep track of aliases vulnerable pointers, and (3) 
+automatically nullifying pointers (a.k.a. intermediate pointers) whose memory contents are explicitly deallocated.
+\tool is implemented as the compile-time instrumentation and transformation which require no intervention from programmers. 
+%Importing of the intermediate pointer will force all of its aliases point to the intermediate pointer. 
+Then the Nullification of the explicit freed pointer will eliminate all dangling pointers that are aliases of the freed pointer.
+We also design a conservative static analysis method to reduce the unnecessary transformation. 
+Experimental results show that \tool can protect the target software (the SPEC CPU benchmarks and programs with known CVE) with
+negligible performance overhead ($< 1$\% with the proposed static analysis).</p>
 
 <h3>
 <a id="Overview" class="anchor" href="#Overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
