@@ -1,5 +1,5 @@
 CC := clang
-CFLAGS := -g -O0 -Xclang -load -Xclang /home/fff000/Documents/nodang/llvm/build/src/libNoDangPass.so
+CFLAGS := -g -O0 -Xclang -load -Xclang ../../dangdone/build/src/libNoDangPass.so
 
 tests : main.o other.o
 	$(CC) -o $@ *.o

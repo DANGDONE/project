@@ -108,8 +108,8 @@ int main()
     getAddr();
     structTest();
     structGTest();
-    structPTest();
-    arrayTest();
-    arrayGTest();
+    //structPTest();
+    //arrayTest();
+    //arrayGTest();
     return 0;
 }

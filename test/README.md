@@ -1,1 +1,16 @@
-Output of modified arrayTest function in simplecases is 0, because the whole array only has one middle level pointer, so this only prevent alias between arrays, not the element inside the array. In commit 76560f5 at 3/25/2016, this version can handle alias inside array.
+Examples:
+
+    $ cd simpleproject/
+    $ Change the llvm pass path in the makefile
+    $ make CFLAG="-g -O0"
+    $ ./test
+    $ make clean
+    $ make
+    $ ./test
+
+    You can see the difference between the two outputs.
+
+CVEs:
+
+    $ Dir CVE shows the real world programs we evaluated.
+
