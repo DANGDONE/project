@@ -14,3 +14,6 @@ CVEs:
 
     $ Dir CVE shows the real world programs we evaluated.
 
+SPEC 2006:
+
+    $ Dir SPEC stores experiment for spec 2006.
