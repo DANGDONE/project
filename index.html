@@ -62,13 +62,14 @@ pointer is dereferenced. When the vulnerable pointer is deallocated, DANGDONE nu
 <h3>
 <a id="Prototype" class="anchor" href="#Prototype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prototype</h3>
 
-<p>We implemented a prototype based on the LLVM Compiler project. The static analysis tool is built as a Clang Tool and the 
-transformation phase is implemented as a LLVM pass. Our prototype generates warnings by analyzing ASTs of program, then transform 
-LLVM IR code according to the warnings. LLVM IR uses the Static Single Assignment (SSA). So there is no value that is reassigned 
-and each value has only a single assignment that defines it. LLVM provides interfaces so that each use of a value can be easily 
-traced back to its definition. With this feature provided by LLVM we can easily find all uses of a variable. With the support of 
-LLVM front-end we can easily build target applications with one extra complication option. Due to our mitigation transform program 
-in LLVM IR instead of source codes and LLVM IR provides high compatibility for different languages and different platforms.</p>
+<p>The approach proposed in this work is applicable for source code, intermediate representation, and even binary if
+the type information is available. Currently, we implemented DANGDONE at intermediate representation (IR) level based on
+the LLVM Compiler project for the reason of efficiency and cross-language support. Furthermore, the code transformation at
+the source code level may not be helpful for the readability and maintainability.The static analysis phase in DANGDONE is built
+as a Clang Tool and the transformation phase is implemented as an extra LLVM pass. A LLVM pass performs the transformations
+and optimizations that make up the compiler. The source code for it can be found 
+<a href="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/DANGDONE.zip">here.</a> The way how to use it can be found 
+<a href="https://github.com/DANGDONE/project/tree/master/dangdone">here</a> </p>
 <h3>
 <a id="Experiment" class="anchor" href="#Experiment" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experiment</h3>
 <p>Overall experimental results can be found <a href="https://dangdone.github.io/project/experiment.html">here!</a> Some detailed experiment result can be found <a href="https://github.com/DANGDONE/project/tree/master/test">here</a></p>
