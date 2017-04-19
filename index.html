@@ -34,40 +34,17 @@
         <h3>
 <a id="Introduction" class="anchor" href="#Introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>Dangling pointers have become an important class of software bugs that could result in use-after-free and double-free vulnerabilities. 
-The effects of their exploitation can lead to information leakage, privilege elevation or even control-flow hijacking.
-So far, only few approaches are proposed to protect against dangling pointers and most of them incur high overhead.
-In this paper we present a lightweight approach, named DANGDONE, to eliminate dangling pointers during the compilation time.
-Because the root cause of a dangling pointer is that the pointer and its aliases are not nullified after the objects they point-to are
-deallocated,
-DANGDONE achieves the protection via three steps:
-(1) inserting new pointers point to vulnerable pointers, (2) using new pointers to keep track of aliases vulnerable pointers, and (3) 
-automatically nullifying pointers (a.k.a. intermediate pointers) whose memory contents are explicitly deallocated.
-DANGDONE is implemented as the compile-time instrumentation and transformation which require no intervention from programmers. 
-Then the Nullification of the explicit freed pointer will eliminate all dangling pointers that are aliases of the freed pointer.
-We also design a conservative static analysis method to reduce the unnecessary transformation. 
-Experimental results show that DANGDONE can protect the target software (the SPEC CPU benchmarks and programs with known CVE) with
-negligible performance overhead (<1% with the proposed static analysis).</p>
+<p>Dangling pointers have become an important class of software bugs that can lead to use-after-free and double-free vul-nerabilities. So far, only a few approaches have been proposed to protect against dangling pointers, while most of them suffer from high overhead. In this paper, we propose a lightweight approach, named DANGDONE, to eliminate dangling pointers at the compile time. Based on the root cause of a dangling pointer, i.e., a pointer and its aliases are not nulliﬁed but the object they point to is deal-located, DANGDONE realizes the protection by four steps. First, it creates a new pointer that points to a vulnerable pointer. Second, it creates new pointers to track aliases of the vulnerable pointer. Third, it replaces the use of the vulnerable pointer and its aliases with the new pointers, and thus all the new pointers point to the vulnerable pointer (a.k.a. intermediate pointer). Last, it nulliﬁes the vulnerable pointer whose memory area is deallocated. These four steps are designed as compile-time program transformation, which requires no intervention from users. Experimental results have indicated that DANGDONE can protect target programs (the SPEC CPU benchmarks and programs with known CVEs) with negligible runtime overhead (i.e., around 1% on average).</p>
 
 <h3>
 <a id="Overview" class="anchor" href="#Overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>The basic idea of DANGDONE is as follows: first inserts an new pointer pointing to the pointer which is marked as vulnerable
-by static analysis, and then the new pointer is used to keep the pointer propagation consistent with the vulnerable pointer. 
-Note that aliases of the vulnerable pointer are also vulnerable, so they are all have the corresponding new pointers, which make 
-it possible to keep the pointer propagation consistent with the vulnerable pointer. The instrumentation will make all aliases of 
-the new pointer point to one vulnerable pointer. Then we replace uses of the vulnerable pointer with the new pointer if the vulnerable
-pointer is dereferenced. When the vulnerable pointer is deallocated, DANGDONE nullifies the freed pointers automatically.</p>
+<p>The basic idea of DANGDONE is as follows: 1) create a new pointer that points to the vulnerable pointer; 2) create a new pointer for each alias of the vulnerable pointer and use these new pointers to track pointer propagations such that the new pointers maintain the same point-to relations as the vulnerable pointer and its aliases; 3) replace the use of the vulnerable pointer and its aliases with the new pointers; and 4) nullify the vulnerable pointer when the vulnerable pointer is deallocated. By this means, the protection of the vulnerable pointers is reduced to the protection of the new pointers, which can be simply realized by nullifying those vulnerable (or intermediate) pointers as the new pointers and their aliases all point to those vulnerable pointers. </p>
 <p style="text-align:center;"><img src="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/overview.png" alt="Overview of DANGDONE" width="600" ></p>
 <h3>
 <a id="Prototype" class="anchor" href="#Prototype" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prototype</h3>
 
-<p>The approach proposed in this work is applicable for source code, intermediate representation, and even binary if
-the type information is available. Currently, we implemented DANGDONE at intermediate representation (IR) level based on
-the LLVM Compiler project for the reason of efficiency and cross-language support. Furthermore, the code transformation at
-the source code level may not be helpful for the readability and maintainability.The static analysis phase in DANGDONE is built
-as a Clang Tool and the transformation phase is implemented as an extra LLVM pass. A LLVM pass performs the transformations
-and optimizations that make up the compiler. The source code for it can be found 
+<p>The proposed approach is applicable for source code, intermediate representation, and even binary if the type information is available. Currently, we implemented DANGDONE at the intermediate representation (IR) level based on LLVM for the sake of efﬁciency and cross-language support. The transformation in DANGDONE is implemented as a LLVM pass. A LLVM pass performs the transformations and optimizations that make up the compiler. Therefore, the workﬂow of DANGDONE is that 1) Clang compiles a target project into LLVM IR; 2) DANGDONE applies a LLVM pass to transform the LLVM IR; and 3) Clang compiles the transformed LLVM IR to binary. The source code for it can be found 
 <a href="https://raw.githubusercontent.com/dangdone/project/gh-pages/images/DANGDONE.zip">here.</a> Instructions for compiling it can be found 
 <a href="https://github.com/DANGDONE/project/tree/master/dangdone">here.</a> </p>
 <h3>
